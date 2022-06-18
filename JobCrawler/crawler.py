@@ -32,13 +32,21 @@ class JobCrawler:
             dates = a_job.find_element(by=By.CSS_SELECTOR, value="div.card-date")
             titles = a_job.find_element(by=By.CSS_SELECTOR, value="div.card-title")
             title = titles.find_element(by=By.CSS_SELECTOR, value="span:nth-of-type(2)")
-            #clear_date = re.search(r"(^[^\\]*)", dates.text).group(0)
-            clear_date = re.search(r"(^[^\\nbookmark_border]*)", dates.text).group(0)
-            one_job = (clear_date[0:-1],  title.text)
-            all_jobs = all_jobs + [one_job]
+            skills = a_job.find_elements(by=By.CSS_SELECTOR, value='div.skill')
 
-        for j in all_jobs:
-            print(j)
+            for i, skill in enumerate(skills):
+                #test = skill.find_elements(By.PARTIAL_LINK_TEXT, value=' alt="')
+                #test = skill.find_element(By.PARTIAL_LINK_TEXT, value=' alt="')
+                #test = skill.find_element(By.CSS_SELECTOR, value='div.img')
+                print(i,' ' ,skill.text)
+
+            # clear_date = re.search(r"(^[^\\nbookmark_border]*)", dates.text).group(0)
+            # one_job = (clear_date[0:-1],  title.text)
+            #
+            # all_jobs = all_jobs + [one_job]
+
+        # for j in all_jobs:
+        #     print(j)
 
         # return titles
 
@@ -51,11 +59,9 @@ class JobCrawler:
 
         titles_jobs = self.get_title_jobs_nodes()
 
-
     def start(self):
         html = self.get_html()
         self.html = html
-        print(html)
 
     def close(self):
         self.driver.quit()
