@@ -3,6 +3,7 @@ import time
 from os import path as os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+import re
 
 # test_url = 'https://www.jobs.bg/front_job_search.php?subm=1&categories%5B%5D=56&domains%5B%5D=3'
 # test_url = 'https://www.jobs.bg/?categories%5B0%5D=56'
@@ -24,30 +25,21 @@ class JobCrawler:
         # dates = self.driver.find_elements(by=By.CSS_SELECTOR, value="div.card-date")
         # titles = self.driver.find_elements(by=By.CSS_SELECTOR, value="div.card-title")
 
-        #one_job = {}
         all_jobs = []
         jobs = self.driver.find_elements(by=By.CSS_SELECTOR, value="div.mdc-card")
 
         for a_job in jobs:
             dates = a_job.find_element(by=By.CSS_SELECTOR, value="div.card-date")
             titles = a_job.find_element(by=By.CSS_SELECTOR, value="div.card-title")
-            # one_job['date'] = dates.text
-            # one_job['title'] = titles.text
-            one_job = (dates.text,  titles.text)
+            title = titles.find_element(by=By.CSS_SELECTOR, value="span:nth-of-type(2)")
+            #clear_date = re.search(r"(^[^\\]*)", dates.text).group(0)
+            clear_date = re.search(r"(^[^\\nbookmark_border]*)", dates.text).group(0)
+            one_job = (clear_date[0:-1],  title.text)
             all_jobs = all_jobs + [one_job]
 
-        print(all_jobs)
+        for j in all_jobs:
+            print(j)
 
-        # for title_node in titles:
-        #     title = title_node.find_element(by=By.CSS_SELECTOR, value="span:nth-of-type(2)")
-        #     print(title.text)
-        #
-        # for dates_node in dates:
-        #     #date = dates_node.find_element(by=By.CSS_SELECTOR, value="span:nth-of-type(2)")
-        #     #print(date.text)
-        #     print(dates_node.text)
-
-        #print(titles)
         # return titles
 
     def get_html(self):
@@ -65,6 +57,10 @@ class JobCrawler:
         self.html = html
         print(html)
 
+    def close(self):
+        self.driver.quit()
+
 if __name__ == '__main__':
     test = JobCrawler(test_url)
     test.start()
+    test.close()
