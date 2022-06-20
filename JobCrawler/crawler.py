@@ -34,16 +34,23 @@ class JobCrawler:
             title = titles.find_element(by=By.CSS_SELECTOR, value="span:nth-of-type(2)")
             skills = a_job.find_elements(by=By.CSS_SELECTOR, value='div.skill')
 
-            # for i, skill in enumerate(skills):
-            #     #test = skill.find_elements(By.PARTIAL_LINK_TEXT, value=' alt="')
-            #     #test = skill.find_element(By.PARTIAL_LINK_TEXT, value=' alt="')
-            #     #test = skill.find_element(By.CSS_SELECTOR, value='div.img')
-            #     print(i,' ' ,skill.text)
+            all_skills = ''
+            for skill in skills:
+                try:
+                    img = skill.find_element(By.TAG_NAME, 'img')
+                except:
+                    print('Not found')
+
+                all_skills += img.get_attribute("alt") + ';'
 
             clear_date = re.search(r"(^[^\\nbookmark_border]*)", dates.text).group(0)
-            one_job = (clear_date[0:-1],  title.text)
+            one_job = {
+                'date': clear_date[0:-1],
+                'title': title.text,
+                'skills': all_skills
+            }
 
-            all_jobs = all_jobs + [one_job]
+            all_jobs.append(one_job)
 
         for j in all_jobs:
             print(j)
@@ -59,12 +66,12 @@ class JobCrawler:
 
         titles_jobs = self.get_title_jobs_nodes()   #on this page
 
-        print('  scroll next pages  ')
-        time.sleep(2)
-        # Scroll down to bottom
-        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        print('  search in next pages  ')
-        titles_jobs = self.get_title_jobs_nodes()   #on NEXT page
+        # print('  scroll next pages  ')
+        # time.sleep(2)
+        # # Scroll down to bottom
+        # self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        # print('  search in next pages  ')
+        # titles_jobs = self.get_title_jobs_nodes()   #on NEXT page
 
 
     def start(self):
