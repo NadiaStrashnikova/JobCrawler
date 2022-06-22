@@ -1,12 +1,11 @@
 import time
 
+from read_config import read_config_file
 from os import path as os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import re
 
-# test_url = 'https://www.jobs.bg/front_job_search.php?subm=1&categories%5B%5D=56&domains%5B%5D=3'
-# test_url = 'https://www.jobs.bg/?categories%5B0%5D=56'
 test_url = 'https://www.jobs.bg/front_job_search.php?subm=1&keywords%5B%5D=python'
 
 class JobCrawler:
@@ -14,20 +13,18 @@ class JobCrawler:
     def __init__(self, base_url):
         self.base_url = base_url
 
-        #self.driver = webdriver.Chrome('./chromedriver')
-        self.driver = webdriver.Chrome(r"C:\Program Files (x86)\Google\Chrome\Application\chromedriver.exe")
+        app_setting = read_config_file(filename='config.ini', section='settings')
+        executable_path = app_setting['chromedriver_path']
+        if os.exists(executable_path):
+            self.driver = webdriver.Chrome(executable_path)
+        else:
+            raise Exception(f'There is no file {executable_path} for Chrome driver.')
 
-        # executable_path = 'C:/ProgramFiles(x86)/Google/Chrome/Application/chromedriver.exe'
-        # if os.exists(executable_path):
-        #     self.driver = webdriver.Chrome(executable_path)
 
     def get_title_jobs_nodes(self):
-        # dates = self.driver.find_elements(by=By.CSS_SELECTOR, value="div.card-date")
-        # titles = self.driver.find_elements(by=By.CSS_SELECTOR, value="div.card-title")
-
         all_jobs = []
-        jobs = self.driver.find_elements(by=By.CSS_SELECTOR, value="div.mdc-card")
 
+        jobs = self.driver.find_elements(by=By.CSS_SELECTOR, value="div.mdc-card")
         for a_job in jobs:
             dates = a_job.find_element(by=By.CSS_SELECTOR, value="div.card-date")
             titles = a_job.find_element(by=By.CSS_SELECTOR, value="div.card-title")
@@ -39,8 +36,7 @@ class JobCrawler:
                 try:
                     img = skill.find_element(By.TAG_NAME, 'img')
                 except:
-                    print('Not found')
-
+                    pass
                 all_skills += img.get_attribute("alt") + ';'
 
             clear_date = re.search(r"(^[^\\nbookmark_border]*)", dates.text).group(0)
@@ -54,8 +50,6 @@ class JobCrawler:
 
         for j in all_jobs:
             print(j)
-
-        # return titles
 
     def get_html(self):
         self.driver.get(self.base_url)
