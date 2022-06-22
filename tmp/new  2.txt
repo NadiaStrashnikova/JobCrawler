@@ -18,8 +18,13 @@
 
                             
                                 <div class="card-tags pt-8" style=""><div style="float: left">                
-							<div class="skill"><img src="https://static.jobs.bg/mobile/images/skills/python.png?v=1.0.0" alt="Python" loading="lazy" width="18" height="18" style=""></div>
-                            <div class="skill"><img src="https://static.jobs.bg/mobile/images/skills/ruby.png?v=1.0.0" alt="Ruby" loading="lazy" width="18" height="18" style=""></div>
+							<div class="skill"><img src="https://static.jobs.bg/mobile/images/skills/python.png?v=1.0.0 "alt="Python" 
+										 loading="lazy" 
+										 width="18" 
+										 height="18" 
+										 style=""></div>
+                            <div class="skill"><img src="https://static.jobs.bg/mobile/images/skills/ruby.png?v=1.0.0" alt="Ruby" loading="lazy" width="18" height="18" style="">
+							</div>
                             <div class="skill"><img src="https://static.jobs.bg/mobile/images/skills/javascript.png?v=1.0.0" alt="JavaScript" loading="lazy" width="18" height="18" style=""></div>
                             <div class="skill"><img src="https://static.jobs.bg/mobile/images/skills/perl.png?v=1.0.0" alt="Perl" loading="lazy" width="17" height="18" style=""></div>
                             <div class="skill"><img src="https://static.jobs.bg/mobile/images/skills/htmlslashcss.png?v=1.0.0" alt="HTML/CSS" loading="lazy" width="14" height="18" style=""></div>
