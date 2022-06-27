@@ -21,5 +21,5 @@ def read_config_file(filename='config.ini', section='mysql'):
 
 
 if __name__ == '__main__':
-    db_config = read_config_file('config.ini','mysql')
+    db_config = read_config_file('../config.ini', 'mysql')
     print(db_config)

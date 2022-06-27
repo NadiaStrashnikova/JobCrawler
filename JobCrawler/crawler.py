@@ -1,24 +1,23 @@
 import time
 
-from read_config import read_config_file
+from JobCrawler.read_config import read_config_file
 from os import path as os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import re
 
-test_url = 'https://www.jobs.bg/front_job_search.php?subm=1&keywords%5B%5D=python'
+url = 'https://www.jobs.bg/front_job_search.php?subm=1&keywords%5B%5D=python'
 
 class JobCrawler:
 
-    def __init__(self, base_url):
-        self.base_url = base_url
-
-        app_setting = read_config_file(filename='config.ini', section='settings')
+    def __init__(self, url):
+        app_setting = read_config_file(filename='../config.ini', section='settings')
         executable_path = app_setting['chromedriver_path']
         if os.exists(executable_path):
             self.driver = webdriver.Chrome(executable_path)
         else:
             raise Exception(f'There is no file {executable_path} for Chrome driver.')
+        self.base_url = url
 
 
     def get_title_jobs_nodes(self):
@@ -53,12 +52,12 @@ class JobCrawler:
 
     def get_html(self):
         self.driver.get(self.base_url)
-        #time.sleep(2)  # Let the user actually see something!
-        #btnCookies = self.driver.find_element_by_css_selector('button[onclick="closeCookieBar();"]')
+
         btnCookies = self.driver.find_element(by=By.CLASS_NAME, value='cookie-bar-button')
         btnCookies.click()
 
         titles_jobs = self.get_title_jobs_nodes()   #on this page
+        return titles_jobs
 
         # print('  scroll next pages  ')
         # time.sleep(2)
@@ -76,6 +75,7 @@ class JobCrawler:
         self.driver.quit()
 
 if __name__ == '__main__':
-    test = JobCrawler(test_url)
+    app_setting = read_config_file(filename='../config.ini', section='settings')
+    test = JobCrawler(app_setting['url'])
     test.start()
     test.close()
