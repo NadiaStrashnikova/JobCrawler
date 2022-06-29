@@ -7,7 +7,7 @@ from PyQt5 import QtWidgets as qtw
 from PyQt5 import QtCore as qtc
 
 from UI.Ui_job_crawler_app import Ui_Form
-from UI.Ui_job_table_view import Ui_Form as table_view
+from UI.job_table_view import TableView
 
 BASE_URL = 'https://www.jobs.bg/front_job_search.php?subm=1&keywords%5B%5D=python'
 
@@ -54,8 +54,8 @@ class MainWindow(qtw.QMainWindow, Ui_Form):
 
     @qtc.pyqtSlot(bool)
     def onBtnViewTableClick(self, *args):
-        form_table_view = table_view()
-
+        self.form_table_view = TableView()
+        self.form_table_view.show()
 
     @qtc.pyqtSlot(bool)
     def onBtnCloseClick(self, *args):

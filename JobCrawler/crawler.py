@@ -17,12 +17,18 @@ class Crawler():
     def __init__(self, url):
         self.base_url = url
 
-        app_setting = read_config_file(filename='../config.ini', section='settings')
-        executable_path = app_setting['chromedriver_path']
-        if os.exists(executable_path):
-            self.driver = webdriver.Chrome(executable_path)
-        else:
-            raise Exception(f'There is no file {executable_path} for Chrome driver.')
+        # app_setting = read_config_file(filename='../config.ini', section='settings')
+        # executable_path = app_setting['chromedriver_path']
+        # if os.exists(executable_path):
+        #     self.driver = webdriver.Chrome(executable_path)
+        # else:
+        #     raise Exception(f'There is no file {executable_path} for Chrome driver.')
+
+        ### init driver dynamically (without specifying installation path):
+        # Reference: https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
+        service = Service(executable_path=ChromeDriverManager().install())
+        self.driver = webdriver.Chrome(service=service)
+
 
     def check_date_conditions(self,nac_date)-> bool:
         today = datetime.today()
