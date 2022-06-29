@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>283</width>
-    <height>135</height>
+    <width>210</width>
+    <height>140</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,15 +18,15 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>261</width>
+     <width>191</width>
      <height>111</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="Btn_read_site">
       <property name="text">
-       <string>Зареди данните от таблицата</string>
+       <string>Прочети данните от сайта</string>
       </property>
      </widget>
     </item>
@@ -44,9 +44,9 @@
      </spacer>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="Btn_load_all">
       <property name="text">
-       <string>Прочети данните от сайта</string>
+       <string>Зареди данните от таблицата</string>
       </property>
      </widget>
     </item>
@@ -64,7 +64,7 @@
      </spacer>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="Btn_close">
       <property name="text">
        <string>Изход</string>
       </property>

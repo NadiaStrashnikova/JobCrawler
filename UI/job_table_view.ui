@@ -22,7 +22,7 @@
      <height>401</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,20">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -36,6 +36,19 @@
        <widget class="QDateEdit" name="dateEdit"/>
       </item>
      </layout>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>5</width>
+        <height>10</height>
+       </size>
+      </property>
+     </spacer>
     </item>
     <item>
      <widget class="QTableView" name="tableView"/>

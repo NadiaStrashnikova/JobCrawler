@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'job_view.ui'
+# Form implementation generated from reading ui file 'job_table_view.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -30,9 +30,14 @@ class Ui_Form(object):
         self.dateEdit.setObjectName("dateEdit")
         self.horizontalLayout.addWidget(self.dateEdit)
         self.verticalLayout.addLayout(self.horizontalLayout)
+        spacerItem = QtWidgets.QSpacerItem(5, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem)
         self.tableView = QtWidgets.QTableView(self.verticalLayoutWidget)
         self.tableView.setObjectName("tableView")
         self.verticalLayout.addWidget(self.tableView)
+        self.verticalLayout.setStretch(0, 1)
+        self.verticalLayout.setStretch(1, 1)
+        self.verticalLayout.setStretch(2, 20)
         self.pushButton = QtWidgets.QPushButton(Form)
         self.pushButton.setGeometry(QtCore.QRect(360, 420, 111, 31))
         self.pushButton.setObjectName("pushButton")
