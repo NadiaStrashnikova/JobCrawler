@@ -10,8 +10,11 @@ if __name__=='__main__':
     list_job = job_cr.jobs
     print(len(list_job))
 
+    # if it crawls the site from scratch - first clear DB
     db = job_db.DB()
-    # db.drop_jobadv_table()
+    db.drop_jobadv_table()
+    db.create_jobadv_table()
+
     # db.get_info_in_db()
     db.insert_jobs(list_job)
     job_cr.close()

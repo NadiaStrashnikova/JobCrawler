@@ -35,7 +35,7 @@ class DB():
             self.conn.commit()
 
     def drop_jobadv_table(self):
-        sql = "DROP TABLE IF EXISTS jobadv"
+        sql = "DROP TABLE IF EXISTS jobadv;"
 
         with self.conn.cursor() as cursor:
             cursor.execute(sql)

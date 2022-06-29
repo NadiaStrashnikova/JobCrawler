@@ -5,7 +5,7 @@ from os import path as os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import re
-import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
 # print(f'CWD:{os.getcwd()}')
@@ -25,7 +25,7 @@ class Crawler():
             raise Exception(f'There is no file {executable_path} for Chrome driver.')
 
     def check_date_conditions(self,nac_date)-> bool:
-        today = datetime.date.today()
+        today = datetime.today()
 
         pub_date = nac_date[0:-1]
         if pub_date == 'днес':
@@ -33,15 +33,47 @@ class Crawler():
         elif pub_date == 'вчера':
             return True
         else:
-            pub_date = datetime.datetime.strptime(pub_date, '%d.%m.%y')
+            pub_date = datetime.strptime(pub_date, '%d.%m.%y')
         days_diff = relativedelta(today, pub_date)
         if days_diff.days>10:
             return False
         else:
             return True
 
+    def normalize_date(self, org_date):
+        pub_date = org_date[0:-1]
+        if pub_date == 'днес':
+            the_day = datetime.today()
+        elif pub_date == 'вчера':
+            the_day = datetime.today() + timedelta(days=-1)
+        else:
+            the_day = pub_date
+        return the_day
+
+    def check_and_insert_job_row(self, date_text, title_text, skills):
+        all_text_date = re.search(r"(^[^\\nbookmark_border]*)", date_text).group(0)
+
+        if self.check_date_conditions(all_text_date):
+            date_str = self.normalize_date(all_text_date)
+            one_job = {
+                'date': date_str,
+                'title': title_text,
+                'skills': skills
+            }
+            self.all_jobs.append(one_job)
+
+    def gather_skills(self, skills):
+        all_skills = ''
+        for skill in skills:
+            try:
+                img = skill.find_element(By.TAG_NAME, 'img')
+            except:
+                pass
+            all_skills += img.get_attribute("alt") + '; '
+        return all_skills
+
     def get_title_jobs_nodes(self):
-        all_jobs = []
+        self.all_jobs = []
 
         jobs = self.driver.find_elements(by=By.CSS_SELECTOR, value="div.mdc-card")
         for a_job in jobs:
@@ -49,28 +81,13 @@ class Crawler():
             titles = a_job.find_element(by=By.CSS_SELECTOR, value="div.card-title")
             title = titles.find_element(by=By.CSS_SELECTOR, value="span:nth-of-type(2)")
             skills = a_job.find_elements(by=By.CSS_SELECTOR, value='div.skill')
+            all_skills = self.gather_skills(skills)
 
-            all_skills = ''
-            for skill in skills:
-                try:
-                    img = skill.find_element(By.TAG_NAME, 'img')
-                except:
-                    pass
-                all_skills += img.get_attribute("alt") + ';'
+            self.check_and_insert_job_row(dates.text, title.text, all_skills)
 
-            clear_date = re.search(r"(^[^\\nbookmark_border]*)", dates.text).group(0)
-            if self.check_date_conditions(clear_date):
-                one_job = {
-                    'date': clear_date[0:-1],
-                    'title': title.text,
-                    'skills': all_skills
-                }
-                all_jobs.append(one_job)
-
-        for j in all_jobs:
+        for j in self.all_jobs:
             print(j)
-
-        return all_jobs
+        return self.all_jobs
 
     def get_html(self):
         self.driver.get(self.base_url)
