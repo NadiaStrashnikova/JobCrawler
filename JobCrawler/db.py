@@ -44,7 +44,7 @@ class DB():
     def insert_job(self, job_data):
         sql = """
             INSERT IGNORE INTO jobadv
-            (name, post_date, skills)
+            (post_date, name,  skills)
             values(%s, %s, %s) 
         """
 
@@ -52,16 +52,18 @@ class DB():
             cursor.execute(sql, tuple(job_data.values()))
             self.conn.commit()
 
-    def insert_jobs(self, jobs_data):
+    def insert_jobs(self, jobs_data:list):
         sql="""
             INSERT IGNORE INTO jobadv
-            (name, post_date, skills)
+            (post_date, name,  skills)
             values(%s, %s, %s) 
         """
+        for a_job in jobs_data:
+            self.insert_job(a_job)
 
-        with self.conn.cursor() as cursor:
-            cursor.executemany(sql, jobs_data)
-            self.conn.commit()
+        # with self.conn.cursor() as cursor:
+        #     cursor.executemany(sql, jobs_data[0])
+        #     self.conn.commit()
 
     def select_all_jobs(self):
         sql = "SELECT id, name, post_date, skills FROm jobadv"

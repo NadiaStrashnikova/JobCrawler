@@ -6,19 +6,21 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import re
 
+# print(f'CWD:{os.getcwd()}')
+
 url = 'https://www.jobs.bg/front_job_search.php?subm=1&keywords%5B%5D=python'
 
-class JobCrawler:
+class Crawler():
 
     def __init__(self, url):
+        self.base_url = url
+
         app_setting = read_config_file(filename='../config.ini', section='settings')
         executable_path = app_setting['chromedriver_path']
         if os.exists(executable_path):
             self.driver = webdriver.Chrome(executable_path)
         else:
             raise Exception(f'There is no file {executable_path} for Chrome driver.')
-        self.base_url = url
-
 
     def get_title_jobs_nodes(self):
         all_jobs = []
@@ -39,6 +41,9 @@ class JobCrawler:
                 all_skills += img.get_attribute("alt") + ';'
 
             clear_date = re.search(r"(^[^\\nbookmark_border]*)", dates.text).group(0)
+            # check if it is text 'dnes'
+            # check if it is 10 days ago
+
             one_job = {
                 'date': clear_date[0:-1],
                 'title': title.text,
@@ -49,6 +54,8 @@ class JobCrawler:
 
         for j in all_jobs:
             print(j)
+
+        return all_jobs
 
     def get_html(self):
         self.driver.get(self.base_url)
@@ -68,14 +75,12 @@ class JobCrawler:
 
 
     def start(self):
-        html = self.get_html()
-        self.html = html
+        self.jobs = self.get_html()
 
     def close(self):
         self.driver.quit()
 
 if __name__ == '__main__':
-    app_setting = read_config_file(filename='../config.ini', section='settings')
-    test = JobCrawler(app_setting['url'])
+    test = Crawler(url)
     test.start()
     test.close()
