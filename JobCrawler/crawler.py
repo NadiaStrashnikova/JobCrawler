@@ -5,6 +5,8 @@ from os import path as os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import re
+import datetime
+from dateutil.relativedelta import relativedelta
 
 # print(f'CWD:{os.getcwd()}')
 
@@ -21,6 +23,22 @@ class Crawler():
             self.driver = webdriver.Chrome(executable_path)
         else:
             raise Exception(f'There is no file {executable_path} for Chrome driver.')
+
+    def check_date_conditions(self,nac_date)-> bool:
+        today = datetime.date.today()
+
+        pub_date = nac_date[0:-1]
+        if pub_date == 'днес':
+            return True
+        elif pub_date == 'вчера':
+            return True
+        else:
+            pub_date = datetime.datetime.strptime(pub_date, '%d.%m.%y')
+        days_diff = relativedelta(today, pub_date)
+        if days_diff.days>10:
+            return False
+        else:
+            return True
 
     def get_title_jobs_nodes(self):
         all_jobs = []
@@ -41,16 +59,13 @@ class Crawler():
                 all_skills += img.get_attribute("alt") + ';'
 
             clear_date = re.search(r"(^[^\\nbookmark_border]*)", dates.text).group(0)
-            # check if it is text 'dnes'
-            # check if it is 10 days ago
-
-            one_job = {
-                'date': clear_date[0:-1],
-                'title': title.text,
-                'skills': all_skills
-            }
-
-            all_jobs.append(one_job)
+            if self.check_date_conditions(clear_date):
+                one_job = {
+                    'date': clear_date[0:-1],
+                    'title': title.text,
+                    'skills': all_skills
+                }
+                all_jobs.append(one_job)
 
         for j in all_jobs:
             print(j)
