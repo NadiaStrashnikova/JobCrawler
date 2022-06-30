@@ -4,9 +4,12 @@ from JobCrawler.read_config import read_config_file
 from os import path as os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 import re
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+
 
 # print(f'CWD:{os.getcwd()}')
 
@@ -17,12 +20,15 @@ class Crawler():
     def __init__(self, url):
         self.base_url = url
 
-        app_setting = read_config_file(filename='../config.ini', section='settings')
-        executable_path = app_setting['chromedriver_path']
-        if os.exists(executable_path):
-            self.driver = webdriver.Chrome(executable_path)
-        else:
-            raise Exception(f'There is no file {executable_path} for Chrome driver.')
+        # app_setting = read_config_file(filename='../config.ini', section='settings')
+        # executable_path = app_setting['chromedriver_path']
+        # if os.exists(executable_path):
+        #     self.driver = webdriver.Chrome(executable_path)
+        # else:
+        #     raise Exception(f'There is no file {executable_path} for Chrome driver.')
+
+        service = Service(executable_path=ChromeDriverManager().install())
+        self.driver = webdriver.Chrome(service=service)
 
     def check_date_conditions(self,nac_date)-> bool:
         today = datetime.today()
