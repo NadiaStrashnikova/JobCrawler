@@ -7,7 +7,7 @@ from PyQt5 import QtWidgets as qtw
 from PyQt5 import QtCore as qtc
 
 from UI.Ui_job_crawler_app import Ui_Form
-from UI.Ui_job_table_view import Ui_Form as table_view
+from UI.job_table_view import Table_view
 
 BASE_URL = 'https://www.jobs.bg/front_job_search.php?subm=1&keywords%5B%5D=python'
 
@@ -19,16 +19,6 @@ class MainWindow(qtw.QMainWindow, Ui_Form):
         self.setupUi(self)
         self.setWindowTitle('Job Crawler')
 
-        # btn_read_new_data = qtw.QPushButton('Read new data')
-        # btn_read_new_data.setGeometry(100,50,50,50)
-        # btn_view_table = qtw.QPushButton('View table')
-        # self.setGeometry(1000, 200, 200, 60)
-        #
-        # # create main layout
-        # main_layout = qtw.QVBoxLayout(self)
-        # main_layout.addWidget(btn_read_new_data)
-        # main_layout.addWidget(btn_view_table)
-        #
         self.Btn_read_site.clicked.connect(self.onBtnReadNewDataClick)
         self.Btn_load_all.clicked.connect(self.onBtnViewTableClick)
         self.Btn_close.clicked.connect(self.onBtnCloseClick)
@@ -54,7 +44,8 @@ class MainWindow(qtw.QMainWindow, Ui_Form):
 
     @qtc.pyqtSlot(bool)
     def onBtnViewTableClick(self, *args):
-        form_table_view = table_view()
+        self.form_table_view = Table_view()
+        self.form_table_view.show()
 
 
     @qtc.pyqtSlot(bool)

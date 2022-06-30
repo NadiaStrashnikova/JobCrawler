@@ -1,16 +1,12 @@
 from UI.Ui_job_table_view import Ui_Form
 from PyQt5 import QtWidgets as qtw
 
-def Class_TableView(object):
+class Table_view(qtw.QWidget, Ui_Form):
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.setupUi(self)
-    #
-    #     self.show()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setupUi(self)
 
-    def setupUi(qtwQWidget, UI_Form):
-        UI_Form.show()
 
 if __name__=='__main__':
     # w = qtw.QWidget()
