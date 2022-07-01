@@ -1,11 +1,105 @@
-from UI.Ui_job_table_view import Ui_Form
+from UI.Ui_job_table_view import Ui_Form_list_jobs
 from PyQt5 import QtWidgets as qtw
+from PyQt5 import QtCore    as qtc
+from PyQt5 import QtGui as qtg
+from JobCrawler.db import DB
 
-class Table_view(qtw.QWidget, Ui_Form):
+import datetime
+
+class Table_view(qtw.QWidget, Ui_Form_list_jobs):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
+        self.table_settings()
+        self.filter_settings()
+        # self.btn_close.clicked.connect(self.onBtnCloseClick)
+
+
+    def table_settings(self):
+        # tableViewWidth = 500 #self.tv_all_jobs.frameGeometry().width()
+        # tableViewHeight = 300 #self.tv_all_jobs.frameGeometry().height()
+        # self.setFixedWidth(tableViewWidth)
+        # self.setFixedHeight(tableViewHeight)
+
+        self.tv_all_jobs.db = DB()
+        self.tv_all_jobs.data = self.tv_all_jobs.db.select_all_jobs()
+
+        model = self.setup_model()
+
+        self.filter_proxy_model = qtc.QSortFilterProxyModel()
+        self.filter_proxy_model.setSourceModel(model)
+        self.filter_proxy_model.setFilterCaseSensitivity(qtc.Qt.CaseSensitivity.CaseInsensitive)
+        self.filter_proxy_model.setFilterKeyColumn(1)
+
+        self.tv_all_jobs.setModel(self.filter_proxy_model)
+
+        row_count = self.tv_all_jobs.model().rowCount()
+        column_count = self.tv_all_jobs.model().columnCount()
+        self.tv_all_jobs.setMinimumHeight(row_count * 40)
+        self.tv_all_jobs.setMinimumWidth(column_count * 200)
+
+        # sets today at the start of the program
+        today = datetime.datetime.today()
+        self.de_post_date.setDate(today)
+
+
+        # columns must sort
+        self.tv_all_jobs.setSortingEnabled(True)
+        self.tv_all_jobs.sortByColumn(0, qtc.Qt.SortOrder.AscendingOrder)
+
+        # qtw.QSizePolicy.
+
+
+    def setup_model(self):
+        model = qtg.QStandardItemModel()
+        model.setHorizontalHeaderLabels(self.tv_all_jobs.db.get_column_names())
+
+        for i, row in enumerate(self.tv_all_jobs.data):
+            # items = [qtg.QStandardItem(str(item)) for item in row]
+
+            items = []
+            for field in row:
+                item = qtg.QStandardItem()
+                if isinstance(field, datetime.date):
+                    field = field.strftime('%d.%m.%Y')
+                # elif isinstance(field, str) and len(field) > 100:
+                #     # set full string with UserRole for later use:
+                #     item.setData(field, qtc.Qt.UserRole)
+                #     # trim string for display
+                #     field = field[0:50] + '...'
+
+                col_role = qtc.Qt.ItemDataRole.DisplayRole
+                item.setData(field, col_role)
+                items.append(item)
+
+            model.insertRow(i, items)
+
+        return model
+
+    def filter_settings(self):
+        pass
+        # # filter box layout:
+        # filter_label = qtw.QLabel('Filter by column: ')
+        #
+        # filter_line_edit = qtw.QLineEdit()
+        # # filter_line_edit.textChanged.connect(self.tableView.filter_proxy_model.setFilterRegExp)
+        #
+        #
+        # comboBox = qtw.QComboBox()
+        # # comboBox.addItems(["{0}".format(col) for col in self.tableView.column_names])
+        # comboBox.setCurrentText('title')
+        # # comboBox.currentIndexChanged.connect(lambda idx: self.tableView.set_filter_column(idx))
+        #
+        # filterBoxLayout = qtw.QHBoxLayout()
+        # filterBoxLayout.addWidget(filter_label)
+        # filterBoxLayout.addWidget(comboBox)
+        # filterBoxLayout.addWidget(filter_line_edit)
+
+    @qtc.pyqtSlot(bool)
+    def onBtnCloseClick(self, *args):
+        pass
+        # self.close()
 
 
 if __name__=='__main__':

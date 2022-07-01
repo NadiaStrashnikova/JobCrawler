@@ -66,7 +66,7 @@ class DB():
         #     self.conn.commit()
 
     def select_all_jobs(self):
-        sql = "SELECT id, name, post_date, skills FROm jobadv"
+        sql = "SELECT id, name, post_date, skills FROM jobadv"
 
         with self.conn.cursor() as cursor:
             cursor.execute(sql)
@@ -85,6 +85,15 @@ class DB():
         else:
             raise ValueError('There is no data in table')
 
+
+    def get_column_names(self):
+        sql = "SELECT id, name, post_date, skills FROM jobadv LIMIT 1;"
+
+        with self.conn.cursor() as cursor:
+            cursor.execute(sql)
+            result = cursor.fetchone()
+
+        return cursor.column_names
 
 
 if __name__ == '__main__':
