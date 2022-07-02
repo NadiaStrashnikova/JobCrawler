@@ -29,10 +29,13 @@ class DB():
                 CONSTRAINT name_date UNIQUE (name, post_date)                    
             );
         """
+        try:
+            with self.conn.cursor() as cursor:
+                cursor.execute(sql)
+                self.conn.commit()
+        except:
+            print('Problem with connecting db')
 
-        with self.conn.cursor() as cursor:
-            cursor.execute(sql)
-            self.conn.commit()
 
     def drop_jobadv_table(self):
         sql = "DROP TABLE IF EXISTS jobadv;"
