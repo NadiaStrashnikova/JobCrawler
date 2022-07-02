@@ -22,8 +22,8 @@ class DB():
         sql = """
             CREATE TABLE IF NOT EXISTS jobadv(
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(100) NOT NULL,
                 post_date DATE NOT NULL,
+                name VARCHAR(100) NOT NULL,
                 skills TEXT,
             
                 CONSTRAINT name_date UNIQUE (name, post_date)                    
@@ -69,7 +69,7 @@ class DB():
         #     self.conn.commit()
 
     def select_all_jobs(self):
-        sql = "SELECT id, name, post_date, skills FROM jobadv"
+        sql = "SELECT id, post_date, name, skills FROM jobadv"
 
         with self.conn.cursor() as cursor:
             cursor.execute(sql)
@@ -90,7 +90,7 @@ class DB():
 
 
     def get_column_names(self):
-        sql = "SELECT id, name, post_date, skills FROM jobadv LIMIT 1;"
+        sql = "SELECT id, post_date, name, skills FROM jobadv LIMIT 1;"
 
         with self.conn.cursor() as cursor:
             cursor.execute(sql)

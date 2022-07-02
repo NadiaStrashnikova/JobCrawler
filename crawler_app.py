@@ -41,6 +41,7 @@ class MainWindow(qtw.QMainWindow, Ui_Form):
         db.insert_jobs(list_job)
         job_cr.close()
 
+        self.onBtnViewTableClick()
 
     @qtc.pyqtSlot(bool)
     def onBtnViewTableClick(self, *args):
@@ -58,4 +59,4 @@ if __name__=='__main__':
 
     window = MainWindow()
 
-    # sys.exit(app.exec_())
+    sys.exit(app.exec_())

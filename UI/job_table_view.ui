@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>515</width>
-    <height>453</height>
+    <width>518</width>
+    <height>464</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,31 +30,21 @@
      <number>0</number>
     </property>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,0,0,0">
-      <item>
-       <widget class="QLabel" name="lbl_filter">
-        <property name="text">
-         <string>Филтър по дата:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0">
       <item>
        <widget class="QLabel" name="lbl_filter_column">
         <property name="text">
          <string>Филтър по колона</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cb_column"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>текст за търсене</string>
         </property>
        </widget>
       </item>
@@ -66,7 +56,11 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="2,1,2">
       <item>
-       <widget class="QDateEdit" name="de_post_date"/>
+       <widget class="QLabel" name="lbl_filter">
+        <property name="text">
+         <string>Филтър по дата:</string>
+        </property>
+       </widget>
       </item>
       <item>
        <spacer name="horizontalSpacer">
@@ -82,7 +76,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QComboBox" name="cb_column"/>
+       <widget class="QDateEdit" name="de_post_date"/>
       </item>
      </layout>
     </item>
