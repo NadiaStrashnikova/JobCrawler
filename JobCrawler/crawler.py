@@ -42,9 +42,11 @@ class Crawler():
     def normalize_date(self, org_date):
         pub_date = org_date[0:-1]
         if pub_date == 'днес':
-            the_day = datetime.today()
+            the_day_date = datetime.today()
+            the_day = the_day_date.strftime('%d.%m.%y')
         elif pub_date == 'вчера':
-            the_day = datetime.today() + timedelta(days=-1)
+            the_day_date = datetime.today() + timedelta(days=-1)
+            the_day = the_day_date.strftime('%d.%m.%y')
         else:
             the_day = pub_date
         return the_day

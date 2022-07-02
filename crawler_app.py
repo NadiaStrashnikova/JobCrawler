@@ -58,4 +58,4 @@ if __name__=='__main__':
 
     window = MainWindow()
 
-    sys.exit(app.exec_())
+    # sys.exit(app.exec_())
