@@ -39,7 +39,9 @@ class Table_view(qtw.QWidget, Ui_Form_list_jobs):
         self.tv_all_jobs.setMinimumWidth(column_count * 200)
         self.tv_all_jobs.resizeColumnToContents(0)
         self.tv_all_jobs.resizeColumnToContents(1)
-        self.tv_all_jobs.setColumnWidth(4, 300)
+        self.tv_all_jobs.resizeColumnToContents(2)
+        # self.tv_all_jobs.setColumnWidth(2, 150)
+        self.tv_all_jobs.setColumnWidth(3, 300)
 
         # sets today at the start of the program
         today = datetime.datetime.today()
@@ -63,7 +65,8 @@ class Table_view(qtw.QWidget, Ui_Form_list_jobs):
         self.verticalLayout.setContentsMargins(5,5,5,5)
         # self.   .verticalLayout.set
         # self.verticalLayout().setSectionResizeMode(qtw.QVBoxLayout.sizeConstraint.Stretch)
-        self.verticalLayout().setSectionResizeMode(qtw.QVBoxLayout.ResizeMode.ResizeToContents);
+        # self.verticalLayout().setSectionResizeMode(qtw.QVBoxLayout.ResizeMode.ResizeToContents)
+        # self.verticalLayout().setS
 
     def setup_model(self):
         model = qtg.QStandardItemModel()
