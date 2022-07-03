@@ -4,7 +4,7 @@ from JobCrawler.read_config import read_config_file
 class DB():
     def __init__(self):
         db_config = read_config_file('../config.ini', 'mysql')
-        print(db_config)
+        # print(db_config)
         try:
            self.conn = mysql.connector.connect(
                                     user=db_config['user'],
@@ -16,7 +16,8 @@ class DB():
         except mysql.connector.Error as err:
             print(err)
 
-        self.create_jobadv_table()
+        if not self.create_jobadv_table():
+            print('Restart programm please.')
 
     def create_jobadv_table(self):
         sql = """
@@ -31,8 +32,12 @@ class DB():
         """
         try:
             with self.conn.cursor() as cursor:
-                cursor.execute(sql)
-                self.conn.commit()
+                try:
+                    cursor.execute(sql)
+                    self.conn.commit()
+                except:
+                    print('Can not connect with db')
+                    return False
         except:
             print('Problem with connecting db')
 

@@ -19,9 +19,9 @@ class MainWindow(qtw.QMainWindow, Ui_Form):
         self.setupUi(self)
         self.setWindowTitle('Job Crawler')
 
-        self.Btn_read_site.clicked.connect(self.onBtnReadNewDataClick)
-        self.Btn_load_all.clicked.connect(self.onBtnViewTableClick)
-        self.Btn_close.clicked.connect(self.onBtnCloseClick)
+        self.btn_read_site.clicked.connect(self.onBtnReadNewDataClick)
+        self.btn_load_all.clicked.connect(self.onBtnViewTableClick)
+        self.btn_close.clicked.connect(self.onBtnCloseClick)
 
         self.show()
 
@@ -33,12 +33,12 @@ class MainWindow(qtw.QMainWindow, Ui_Form):
         print(len(list_job))
 
         # if it crawls the site from scratch - first clear DB
-        db = job_db.DB()
-        db.drop_jobadv_table()
-        db.create_jobadv_table()
+        self.db = job_db.DB()
+        self.db.drop_jobadv_table()
+        self.db.create_jobadv_table()
 
         # db.get_info_in_db()
-        db.insert_jobs(list_job)
+        self.db.insert_jobs(list_job)
         job_cr.close()
 
         self.onBtnViewTableClick()
@@ -47,7 +47,6 @@ class MainWindow(qtw.QMainWindow, Ui_Form):
     def onBtnViewTableClick(self, *args):
         self.form_table_view = Table_view()
         self.form_table_view.show()
-
 
     @qtc.pyqtSlot(bool)
     def onBtnCloseClick(self, *args):
