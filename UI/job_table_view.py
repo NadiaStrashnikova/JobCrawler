@@ -49,16 +49,21 @@ class Table_view(qtw.QWidget, Ui_Form_list_jobs):
         self.tv_all_jobs.setSortingEnabled(True)
         self.tv_all_jobs.sortByColumn(0, qtc.Qt.SortOrder.AscendingOrder)
 
-        # qtw.QSizePolicy.
-
+        # self.verticalLayout.setSizeConstraint(self.frameSize)    ne
+        # self.verticalLayout.setSizeConstraint(self.frameSize())  ne
+        # self.verticalLayout.setSizeConstraint(self.getframeSize)
 
         #resize of widget   - NONE OF THESE WORKS
         # self.horizontalHeader().setSectionResizeMode(qtw.QHeaderView.Stretch)
         # self.horizontalHeader().setStretchLastSection(True)
 
-        # self.verticalLayout.setContentsMargins(5,5,5,5)
+         # qtw.QWidget.setAutoFillBackground()     probwai
+
+
+        self.verticalLayout.setContentsMargins(5,5,5,5)
+        # self.   .verticalLayout.set
         # self.verticalLayout().setSectionResizeMode(qtw.QVBoxLayout.sizeConstraint.Stretch)
-        # self.verticalLayout().setSectionResizeMode(qtw.QVBoxLayout.ResizeMode.ResizeToContents);
+        self.verticalLayout().setSectionResizeMode(qtw.QVBoxLayout.ResizeMode.ResizeToContents);
 
     def setup_model(self):
         model = qtg.QStandardItemModel()
