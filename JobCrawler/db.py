@@ -44,9 +44,12 @@ class DB():
     def drop_jobadv_table(self):
         sql = "DROP TABLE IF EXISTS jobadv;"
 
-        with self.conn.cursor() as cursor:
-            cursor.execute(sql)
-            self.conn.commit()
+        try:
+            with self.conn.cursor() as cursor:
+                cursor.execute(sql)
+                self.conn.commit()
+        except:
+            print('Problem with dropping table in db')
 
     def insert_job(self, job_data):
         sql = """
@@ -55,9 +58,12 @@ class DB():
             values(%s, %s, %s) 
         """
 
-        with self.conn.cursor(prepared=True) as cursor:
-            cursor.execute(sql, tuple(job_data.values()))
-            self.conn.commit()
+        try:
+            with self.conn.cursor(prepared=True) as cursor:
+                cursor.execute(sql, tuple(job_data.values()))
+                self.conn.commit()
+        except:
+            print('Problem with insertin in db')
 
     def insert_jobs(self, jobs_data:list):
         sql="""
@@ -71,17 +77,24 @@ class DB():
     def select_all_jobs(self):
         sql = "SELECT id, post_date, name, skills FROM jobadv"
 
-        with self.conn.cursor() as cursor:
-            cursor.execute(sql)
-            result = cursor.fetchall()
+        try:
+            with self.conn.cursor() as cursor:
+                cursor.execute(sql)
+                result = cursor.fetchall()
+        except:
+            print('Problem with inserting info in table')
 
         return result
 
     def get_info_in_db(self):
         sql = 'SELECT MAX(post_date) AS "Posted Date" FROM jobadv;'
-        with self.conn. cursor() as cursor:
-            cursor.execute(sql)
-            result = cursor.fetchone()
+
+        try:
+            with self.conn. cursor() as cursor:
+                cursor.execute(sql)
+                result = cursor.fetchone()
+        except:
+            print('Problem with reading from db')
 
         if result:
             return result[0]
@@ -92,9 +105,12 @@ class DB():
     def get_column_names(self):
         sql = "SELECT id, post_date, name, skills FROM jobadv LIMIT 1;"
 
-        with self.conn.cursor() as cursor:
-            cursor.execute(sql)
-            result = cursor.fetchone()
+        try:
+            with self.conn.cursor() as cursor:
+                cursor.execute(sql)
+                result = cursor.fetchone()
+        except:
+            print('Problem with reading column names')
 
         return cursor.column_names
 
