@@ -35,8 +35,13 @@
        </property>
        <item>
         <widget class="QLabel" name="lbl_filter_column">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
          <property name="text">
-          <string>Филтър по колона</string>
+          <string>Filter by column</string>
          </property>
         </widget>
        </item>
@@ -45,8 +50,13 @@
        </item>
        <item>
         <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
          <property name="text">
-          <string>текст за търсене:</string>
+          <string>by text: </string>
          </property>
         </widget>
        </item>

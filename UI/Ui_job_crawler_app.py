@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(562, 205)
+        Form.resize(407, 204)
         self.gridLayoutWidget = QtWidgets.QWidget(Form)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(20, 10, 531, 181))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(20, 10, 368, 181))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -27,12 +27,6 @@ class Ui_Form(object):
         self.btn_read_site = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.btn_read_site.setObjectName("btn_read_site")
         self.gridLayout.addWidget(self.btn_read_site, 0, 0, 1, 1)
-        self.lbl_last_readed = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.lbl_last_readed.setObjectName("lbl_last_readed")
-        self.gridLayout.addWidget(self.lbl_last_readed, 0, 1, 1, 1)
-        self.lbl_info_in_db = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.lbl_info_in_db.setObjectName("lbl_info_in_db")
-        self.gridLayout.addWidget(self.lbl_info_in_db, 1, 1, 1, 1)
         self.btn_close = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.btn_close.setObjectName("btn_close")
         self.gridLayout.addWidget(self.btn_close, 2, 0, 1, 1)
@@ -43,8 +37,6 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.btn_load_all.setText(_translate("Form", "Зареди данните от таблицата"))
-        self.btn_read_site.setText(_translate("Form", "Прочети данните от сайта"))
-        self.lbl_last_readed.setText(_translate("Form", "Последно прочитане на: "))
-        self.lbl_info_in_db.setText(_translate("Form", "Налични данни в таблицата :"))
-        self.btn_close.setText(_translate("Form", "Изход"))
+        self.btn_load_all.setText(_translate("Form", "Load last readed data from DB"))
+        self.btn_read_site.setText(_translate("Form", "Read data from site Jobs.bg"))
+        self.btn_close.setText(_translate("Form", "Close"))

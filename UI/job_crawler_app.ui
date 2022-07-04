@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>562</width>
-    <height>205</height>
+    <width>407</width>
+    <height>204</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <rect>
      <x>20</x>
      <y>10</y>
-     <width>531</width>
+     <width>368</width>
      <height>181</height>
     </rect>
    </property>
@@ -26,35 +26,21 @@
     <item row="1" column="0">
      <widget class="QPushButton" name="btn_load_all">
       <property name="text">
-       <string>Зареди данните от таблицата</string>
+       <string>Load last readed data from DB</string>
       </property>
      </widget>
     </item>
     <item row="0" column="0">
      <widget class="QPushButton" name="btn_read_site">
       <property name="text">
-       <string>Прочети данните от сайта</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="lbl_last_readed">
-      <property name="text">
-       <string>Последно прочитане на: </string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLabel" name="lbl_info_in_db">
-      <property name="text">
-       <string>Налични данни в таблицата :</string>
+       <string>Read data from site Jobs.bg</string>
       </property>
      </widget>
     </item>
     <item row="2" column="0">
      <widget class="QPushButton" name="btn_close">
       <property name="text">
-       <string>Изход</string>
+       <string>Close</string>
       </property>
      </widget>
     </item>
