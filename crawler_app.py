@@ -37,7 +37,6 @@ class MainWindow(qtw.QMainWindow, Ui_Form):
         self.db.drop_jobadv_table()
         self.db.create_jobadv_table()
 
-        # db.get_info_in_db()
         self.db.insert_jobs(list_job)
         job_cr.close()
 

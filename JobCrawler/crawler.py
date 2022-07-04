@@ -33,7 +33,6 @@ class Crawler():
             return True
         else:
             pub_date = datetime.strptime(pub_date, '%d.%m.%y')
-            # pub_date = '20'+tmp_pub_date[5]+tmp_pub_date[6]+'-'+tmp_pub_date[3]+tmp_pub_date[4]+'-'+tmp_pub_date[0]+tmp_pub_date[1]
         days_diff = relativedelta(today, pub_date)
         if days_diff.days>10:
             return False
@@ -49,7 +48,6 @@ class Crawler():
             the_day_date = datetime.today() + timedelta(days=-1)
             the_day = the_day_date.strftime('%Y-%m-%d')
         else:
-            # the_day = pub_date
             the_day = '20' + pub_date[6] + pub_date[7] + '-' + pub_date[3] + pub_date[4] + '-' + \
                    pub_date[0] + pub_date[1]
         return the_day

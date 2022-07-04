@@ -4,7 +4,6 @@ from JobCrawler.read_config import read_config_file
 class DB():
     def __init__(self):
         db_config = read_config_file('../config.ini', 'mysql')
-        # print(db_config)
         try:
            self.conn = mysql.connector.connect(
                                     user=db_config['user'],
@@ -17,7 +16,7 @@ class DB():
             print(err)
 
         if not self.create_jobadv_table():
-            print('Restart programm please.')
+            print('Check DB, please')
 
     def create_jobadv_table(self):
         sql = """
@@ -69,10 +68,6 @@ class DB():
         for a_job in jobs_data:
             self.insert_job(a_job)
 
-        # with self.conn.cursor() as cursor:
-        #     cursor.executemany(sql, jobs_data[0])
-        #     self.conn.commit()
-
     def select_all_jobs(self):
         sql = "SELECT id, post_date, name, skills FROM jobadv"
 
@@ -107,7 +102,8 @@ class DB():
 if __name__ == '__main__':
     db = DB()
     db.get_info_in_db()
-    db.insert_job({'name':'2',
-                   'post_date' : 4500,
+    db.insert_job({
+                   'post_date' : '2022-07-01',
+                    'name': '2',
                    'skills': 'Python'
                    })
